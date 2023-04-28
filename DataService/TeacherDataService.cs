@@ -7,40 +7,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreTestInnovar.DataService;
 
-public class StudentDataService
-{
-    private Context _context;
 
-    public StudentDataService(Context context){
+    public class TeacherDataService
+    {
+     private Context _context;
+
+    public TeacherDataService(Context context){
         _context = context;
     }
 
-    public List<tStudent> GetStudents(){
-        return _context.Students.ToList();
+    public List<tTeacher> GetTeachers(){
+        return _context.Teachers.ToList();
     }
 
-    public List<tStudent> GetStudentByLastName(string lastName){
-        return _context.Students.Where(student => student.LastName == lastName).ToList();
+    public List<tTeacher> GetTeacherByLastName(string lastName){
+        return _context.Teachers.Where(teacher => teacher.LastName == lastName).ToList();
     }
 
-    public List<tStudent> GetStudentByName(string name){
-        return _context.Students.Where(student => student.Name == name).ToList();
+    public List<tTeacher> GetTeacherByName(string name){
+        return _context.Teachers.Where(teacher => teacher.Name == name).ToList();
     }
 
-    public List<tStudent> GetStudentByCourseId(long idCourse){
-        return _context.Students.Where(student=>student.IdCourse == idCourse).ToList();
+    public List<tTeacher> GetTeacherByCourseId(long idCourse){
+        return _context.Teachers.Where(teacher=>teacher.IdCourse == idCourse).ToList();
     }
 
-    public List<tStudent> GetStudentsWhitCourse(){
-        return _context.Students.Include(student=>student.course).ToList();
+    public List<tStudent> GetTeachersWhitCourse(){
+        return _context.Teachers.Include(teacher=>teacher.course).ToList();
     }
 
-    public tStudent? UpdateNameOfStudent(long idCourse, string newName){
-        var student = GetStudent(idCourse);
-        if(student == null) return null;
-        student.Name = newName;
+    public tTeacher? UpdateNameOfTeacher(long idCourse, string newName){
+        var teacher = GetTeachers(idCourse);
+        if(teacher == null) return null;
+        teacher.NameTeacher = newName;
         _context.SaveChanges();
-        return student;
+        return teacher;
     }
     public tStudent? GetStudent(long id){
         var student = _context.Students.Find(id);
@@ -72,5 +73,5 @@ public class StudentDataService
         _context.Students.Remove(studentDbo);
         _context.SaveChanges();
         return true;
+    }   
     }
-}

@@ -4,50 +4,85 @@ using System.Linq;
 using System.Threading.Tasks;
 using AcademyApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NetCoreTestInnovar.BusinessService;
 
-namespace AcademyApi.Controllers
-{
+namespace AcademyApi.Controllers;
+
     [ApiController]
     [Route("[controller]")]
-    public class TeacherController:ControllerBase
+
+    public class TeacherController: ControllerBase
     {
-        private Context _context;
-        public TeacherController(Context context){
-            _context=context;
+         private TeacherBusinessService _teacherBusinessService;
+        public TeacherController(TeacherBusinessService teacherBusinessService){
+            _teacherBusinessService=teacherBusinessService;
         }    
-        //get 
+        //get student
         [HttpGet]
-        public IEnumerable<tTeacher>GetTeachers(){
-           return _context.Teachers.ToList();
-        }
-        [HttpPost]
-    public tTeacher InsertTeacher(tTeacher teacher){
-        _context.Teachers.Add(teacher);
-        _context.SaveChanges();
-        return teacher;
+    public List<tTeacher> GetTeachers(){
+        return _teacherBusinessService.GetTeachers();
     }
 
-    //Update beer
+     //Get one student
+    [HttpGet("{id}")]
+    public tStudent? GetStudent(long id){
+        return _studentBusinessService.GetStudent(id);
+    }
+
+    //Insert Beer
+    [HttpPost]
+    public tStudent InsertStudent(tStudent student){
+        return _studentBusinessService.InsertStudent(student);
+    }
+
+    //Update 
     [HttpPut]
-    public tTeacher? UpdateTeacher(tTeacher teacher){
-        var teacherDbo = _context.Teachers.Find(teacher.IdTeacher);
-
-        if(teacherDbo == null) return null;
-
-        teacherDbo.Name = teacher.Name;
-        _context.SaveChanges();
-        return teacherDbo;
+    public tStudent? UpdateStudent(tStudent student){
+        return _studentBusinessService.UpdateBeer(student);
     }
 
     //Delete 
     [HttpDelete("{id}")]
-    public bool DeleteTeacher(long id){
-        var teacherDbo = _context.Teachers.Find(id);
-        if(teacherDbo==null) return false;
-
-        _context.Teachers.Remove(teacherDbo);
-        _context.SaveChanges();
-        return true;
+    public bool DeleteStudent(long id){
+        return _studentBusinessService.DeleteStudent(id);
     }
+/*
+    [HttpGet("[action]")]
+    public List<tStudent> GetStudentsByYearBefore(int year){
+        return _studentBusinessService.GetStudentsByYearBefore(year);
+    }
+*/
+    [HttpPost("[action]")]
+    public List<tStudent> GetStudentByName(string name){
+        return _studentBusinessService.GetStudentByName(name);
+    }
+
+    [HttpPost("[action]")]
+    public List<tStudent> GetStudentByCourseId(long idCourse){
+        return _studentBusinessService.GetStudentByCourseId(idCourse);
+    }
+
+    [HttpPost("[action]")]
+    public List<tStudent> GetStudentsWhitCourse(){
+        return _studentBusinessService.GetStudentsWhitCourse();
+    }
+/*
+    //Update Year
+    [HttpPost("[action]")]
+    public tStudent? UpdateYearOfBeer(long beerId, int newYear){
+        return _studentBusinessService.UpdateYearOfBeer(beerId, newYear);
+    }
+*/
+    //Get student names
+    [HttpPost("[action]")]
+    public List<string> GetStudentNames(){
+        return _studentBusinessService.GetStudentNames();
+    }
+    
+    //Get student names upper case
+    [HttpPost("[action]")]
+    public List<string> GetStudentNamesUpperCase(){
+        return _studentBusinessService.GetStudentNamesUpperCase();
     }
 }

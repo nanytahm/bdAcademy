@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreTestInnovar.DataService;
 
-public class StudentDataService
-{
-    private Context _context;
+    public class QuestionsDataService
+    {
+        private Context _context;
 
-    public StudentDataService(Context context){
+    public QuestionsDataService(Context context){
         _context = context;
     }
 
@@ -73,4 +73,4 @@ public class StudentDataService
         _context.SaveChanges();
         return true;
     }
-}
+    }

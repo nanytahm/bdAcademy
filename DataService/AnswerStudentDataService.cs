@@ -7,16 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreTestInnovar.DataService;
 
-public class StudentDataService
-{
-    private Context _context;
+    public class AnswerStudentDataService
+    {
+        private Context _context;
 
-    public StudentDataService(Context context){
+    public AnswerStudentDataService(Context context){
         _context = context;
     }
 
-    public List<tStudent> GetStudents(){
-        return _context.Students.ToList();
+    public List<tAnswerStudent> GetAnswerStudents(){
+        return _context.AnswerStudents.ToList();
     }
 
     public List<tStudent> GetStudentByLastName(string lastName){
@@ -73,4 +73,4 @@ public class StudentDataService
         _context.SaveChanges();
         return true;
     }
-}
+    }
